@@ -1,10 +1,23 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "target": "ES2022",
-    "strict": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true
-  }
+    /* === JavaScript Output Settings === */
+    "target": "ES2022",                         // Modern JS output (works with Node 18+)
+    "module": "NodeNext",                       // Use ESM behavior for Node.js
+    "moduleResolution": "NodeNext",             // Resolve modules like Node ESM
+    "esModuleInterop": true,                    // Allows default imports from CommonJS (e.g. express)
+    "types": ["node"],                          // Include Node.js global types
+
+    /* === Type Checking === */
+    "strict": true,                             // Enables all strict type-checking options
+    "noUncheckedIndexedAccess": true,           // Safer array/object access
+    "exactOptionalPropertyTypes": true,         // Enforces exact optional typing
+    "skipLibCheck": true,                       // Skip type checking node_modules for faster builds
+
+               
+
+    /* === Project Settings === */
+    "allowSyntheticDefaultImports": true,       // Allows default import from CommonJS modules
+    "forceConsistentCasingInFileNames": true    // Prevents case-sensitive import mistakes
+  },
+
 }

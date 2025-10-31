@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Activate Your LMS Account</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9fafb;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .email-header {
+        background-color: #3b82f6;
+        padding: 24px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .email-header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .email-body {
+        padding: 24px;
+        text-align: center;
+      }
+
+      .email-body h2 {
+        color: #1f2937;
+        font-size: 22px;
+      }
+
+      .email-body p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 12px 0;
+        color: #4b5563;
+      }
+
+      .activation-code {
+        display: inline-block;
+        margin: 20px 0;
+        font-size: 28px;
+        letter-spacing: 4px;
+        font-weight: bold;
+        color: #2563eb;
+        background: #eff6ff;
+        padding: 12px 24px;
+        border-radius: 8px;
+      }
+
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        background-color: #2563eb;
+        color: #fff;
+        padding: 14px 28px;
+        text-decoration: none;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: background 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #1e40af;
+      }
+
+      .email-footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #f3f4f6;
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .email-footer a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="email-header">
+        <h1>Welcome to Learnify LMS 🎓</h1>
+      </div>
+
+      <div class="email-body">
+        <h2>Hello <%= user.name %>,</h2>
+        <p>Thank you for registering with <strong>Learnify LMS</strong>! To activate your account and start your learning journey, please use the activation code below:</p>
+
+        <div class="activation-code"><%= activationCode %></div>
+
+        <p>This code will expire in <strong>5 minutes</strong>. Please verify your email promptly to access your dashboard.</p>
+
+
+        <p>If you didn’t sign up, you can safely ignore this email.</p>
+      </div>
+
+      <div class="email-footer">
+        <p>Need help? Contact our support at <a href="mailto:support@learnify.com">support@learnify.com</a></p>
+        <p>© <%= new Date().getFullYear() %> Learnify LMS. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

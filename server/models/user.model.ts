@@ -41,7 +41,6 @@ const userSchemna: Schema<IUser> = new mongoose.Schema({
     },
     password:{
         type:String,
-        required: [true, "Plesae Enter Your Password"],
         minLength: [6, "Passeord must be the at least 6 character"],
         select: false,
     },
@@ -81,12 +80,16 @@ userSchemna.methods.comparePassword = async function(enteredPassword:string): Pr
 
 // sign access token
 userSchemna.methods.SignAccessToken = function () {
-    return jwt.sign({id: this._id}, process.env.ACCESS_TOKEN || '')
+    return jwt.sign({id: this._id}, process.env.ACCESS_TOKEN || '', {
+        expiresIn: "5m",
+    })
 }
 
 // sign refresh token
 userSchemna.methods.SignRefreshToken = function () {
-    return jwt.sign({id: this._id}, process.env.REFRESH_TOKEN || '')
+    return jwt.sign({id: this._id}, process.env.REFRESH_TOKEN || '', {
+        expiresIn: "3d",
+    })
 
 }
 

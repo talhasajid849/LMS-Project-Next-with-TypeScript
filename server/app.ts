@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import useRouter from "./routes/user.route";
 import courseRouter from "./routes/course.route";
 import orderRouter from "./routes/order.route";
+import notificationRoute from "./routes/notification.route";
 dotenv.config();
 
 
@@ -23,7 +24,7 @@ app.use(cors({
 
 
 // routes
-app.use("/api/v1", useRouter, courseRouter, orderRouter);;
+app.use("/api/v1", useRouter, courseRouter, orderRouter,notificationRoute);
 
 // testing api
 app.get("/test", (req:Request, res:Response, next: NextFunction) => {

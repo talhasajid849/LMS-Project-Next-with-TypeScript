@@ -10,7 +10,7 @@ import path from "path";
 import sendMail from "../utils/sendMail";
 import { accessTokenOption, refreshTokenOption, sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
-import { getUserById } from "../services/user.services";
+import { getAllUsersService, getUserById } from "../services/user.services";
 import { Types } from "mongoose";
 import cloudinary from "cloudinary"
 
@@ -435,3 +435,14 @@ export const updateProfilePicture = CatchAsyncError(async (req: Request, res: Re
     }
 })
 
+
+
+// get All users ----- only for admin
+export const getAllUsers = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        getAllUsersService(res);
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+    }
+})

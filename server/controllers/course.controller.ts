@@ -3,7 +3,7 @@ import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import cloudinary from "cloudinary";
 import { create } from "domain";
-import { createCourse } from "../services/course.servise";
+import { createCourse, getAllCoursesService } from "../services/course.servise";
 import CourseModel from "../models/course.model";
 import { redis } from "../utils/redis";
 import mongoose from "mongoose";
@@ -410,3 +410,14 @@ export const addReplyToReview = CatchAsyncError(async (req: Request, res: Respon
   }
 })
 
+
+
+// get All Courses ----- only for admin
+export const getAllCourses = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        getAllCoursesService(res);
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+    }
+})

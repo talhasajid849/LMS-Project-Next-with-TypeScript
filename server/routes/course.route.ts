@@ -5,6 +5,7 @@ import {
   addReplyToReview,
   addReview,
   editCourse, getAllCourse,
+  getAllCourses,
   getCourseByUser, getSingleCourse,
   uploadCourse
 } from "../controllers/course.controller";
@@ -64,6 +65,13 @@ courseRouter.put(
   isAutheticated,
   authorizedRoles("admin"),
   addReplyToReview,
+);
+
+courseRouter.get(
+  "/get-courses",
+  isAutheticated,
+  authorizedRoles("admin"),
+  getAllCourses,
 );
 
 

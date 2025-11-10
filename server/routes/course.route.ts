@@ -9,6 +9,7 @@ import {
   getCourseByUser, getSingleCourse,
   uploadCourse
 } from "../controllers/course.controller";
+import { deleteUser } from "../controllers/user.controller";
 
 const courseRouter = express.Router();
 
@@ -72,6 +73,13 @@ courseRouter.get(
   isAutheticated,
   authorizedRoles("admin"),
   getAllCourses,
+);
+
+courseRouter.delete(
+  "/delete-courses/:id",
+  isAutheticated,
+  authorizedRoles("admin"),
+  deleteUser,
 );
 
 

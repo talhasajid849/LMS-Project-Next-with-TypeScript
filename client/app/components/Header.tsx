@@ -4,16 +4,22 @@ import Link from "next/link";
 import React, { FC, useState, useEffect } from "react";
 import NavItems from "../utils/NavItems";
 import { ThemeSwitcher } from "../utils/ThemeSwitcher";
-import DebugTheme from "./Debug";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
+import CustomModel from "../utils/CustomModel"
+import Login from "../components/Auth/Login"
+import SignUp from "../components/Auth/SignUp"
+import Verification from "../components/Auth/Verification"
+
 
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
   activeItem: number;
+  route: string
+  setRoute: (route: string) => void;
 };
 
-const Header: FC<Props> = ({ activeItem, setOpen }) => {
+const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -100,6 +106,60 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
           </div>
         )}
       </div>
+
+      {
+        route === "Login" && (
+          <>
+         {
+           open && (
+            <CustomModel 
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={Login}
+              />
+          )
+         }
+          </>
+        )
+      }
+
+      {
+        route === "Sign-Up" && (
+          <>
+         {
+           open && (
+            <CustomModel 
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={SignUp}
+              />
+          )
+         }
+          </>
+        )
+      }
+
+       {
+        route === "Verification" && (
+          <>
+         {
+           open && (
+            <CustomModel 
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={Verification}
+              />
+          )
+         }
+          </>
+        )
+      }
     </div>
   );
 };

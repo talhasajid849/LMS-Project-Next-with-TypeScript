@@ -5,27 +5,25 @@ import { BiMoon, BiSun } from "react-icons/bi";
 
 export const ThemeSwitcher = () => {
   const [mount, setMount] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   useEffect(() => setMount(true), []);
 
   if (!mount) {
     return null;
   }
-  // console.log(theme)
 
   return (
-    <div className="flex item-center justify-center mx-4">
-      {theme === "light" ? (
+    <div className="flex items-center justify-center mx-4">
+      {resolvedTheme === "light" ? (
         <BiMoon
-         className="cursor-pointer text-black dark:text-white"
-          fill="black"
+          className="cursor-pointer text-black dark:text-white"
           size={25}
           onClick={() => setTheme("dark")}
         />
       ) : (
         <BiSun
           size={25}
-          className="cursor-pointer"
+          className="cursor-pointer text-black dark:text-white"
           onClick={() => setTheme("light")}
         />
       )}

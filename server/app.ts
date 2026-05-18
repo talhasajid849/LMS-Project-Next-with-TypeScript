@@ -10,7 +10,7 @@ import orderRouter from "./routes/order.route";
 import notificationRoute from "./routes/notification.route";
 import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
-dotenv.config();
+dotenv.config({ quiet: true });
 
 // body parser
 app.use(express.json({ limit: "50mb" }));

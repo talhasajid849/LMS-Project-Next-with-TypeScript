@@ -1,5 +1,3 @@
-'use client'
-import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import { Josefin_Sans } from "next/font/google";
@@ -31,13 +29,13 @@ export default function RootLayout({
       >
         <Providers>
           <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-        >
-          {children}
-          <Toaster position="top-center" reverseOrder={false} />
-        </ThemeProvider>
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+          >
+            {children}
+            <Toaster position="top-center" reverseOrder={false} />
+          </ThemeProvider>
         </Providers>
       </body>
     </html>

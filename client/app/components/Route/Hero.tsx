@@ -19,7 +19,7 @@ const Hero: FC<Props> = (props) => {
       </div>
 
         <div className=" md:w-[60%] w-[50%] flex flex-col items-center lg:mt-0 text-center lg:text-left mt-[150px] ">
-          <h1 className="px-[80px] dark:text-white text-[#000000c7] text-[30px] px-3 lg:text-[70px] font-[600] font-Josefin py-2 lg:leading-[75px]  ">
+          <h1 className="px-[65px] dark:text-white text-[#000000c7] text-[30px] px-2 lg:text-[60px] font-[600] font-Josefin py-2 lg:leading-[70px]  ">
             Improve Your Online Learning Experience Better Instantly
           </h1>
           <br />

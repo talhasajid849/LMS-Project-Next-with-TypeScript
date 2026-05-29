@@ -39,7 +39,9 @@ const SignUp: FC<Props> = ({ setRoute }) => {
     if(error){
       if("data" in error){
         const userData = error as any;
-        toast.error(userData.data.error);
+        toast.error(userData.error.error);
+        console.log("userData.error")
+        console.log(userData.error)
       }
     }
   }, [error, isSuccess])
@@ -48,7 +50,7 @@ const SignUp: FC<Props> = ({ setRoute }) => {
     initialValues: { name: "", email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({name, email, password }) => {
-      // setRoute("Verification");
+      setRoute("Verification");
       const data = {
         name, email, password
       }
@@ -69,7 +71,7 @@ const SignUp: FC<Props> = ({ setRoute }) => {
           </label>
           <input
             type="text"
-            name=""
+            name="name"
             value={values.name}
             onChange={handleChange}
             id="name"

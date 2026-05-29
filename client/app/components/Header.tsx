@@ -5,22 +5,25 @@ import React, { FC, useState, useEffect } from "react";
 import NavItems from "../utils/NavItems";
 import { ThemeSwitcher } from "../utils/ThemeSwitcher";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
-import CustomModel from "../utils/CustomModel"
-import Login from "../components/Auth/Login"
-import SignUp from "../components/Auth/SignUp"
-import Verification from "../components/Auth/Verification"
-
+import CustomModel from "../utils/CustomModel";
+import Login from "../components/Auth/Login";
+import SignUp from "../components/Auth/SignUp";
+import Verification from "../components/Auth/Verification";
+import { useSelector } from "react-redux";
+import Image from "next/image";
+import avatar from "../../public/assests/avatar.png"
 
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
   activeItem: number;
-  route: string
+  route: string;
   setRoute: (route: string) => void;
 };
 
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const [active, setActive] = useState(false);
+  const { user } = useSelector((state: any) => state.auth);
   const [openSidebar, setOpenSidebar] = useState(false);
 
   useEffect(() => {
@@ -39,7 +42,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
     }
   };
 
-  // console.log(openSidebar)
   return (
     <div className="w-full relative ">
       <div
@@ -74,11 +76,21 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
                   onClick={() => setOpenSidebar(true)}
                 />
               </div>
-              <HiOutlineUserCircle
-                size={25}
-                className="hidden sm:block cursor-pointer dark:text-white text-black"
-                onClick={() => setOpen(true)}
-              />
+              {user ? (
+                <Link href={"/profile"}>
+                <Image
+                src={user.avatar ? user.avatar : avatar}
+                className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                alt=""
+                />
+                </Link>
+              ) : (
+                <HiOutlineUserCircle
+                  size={25}
+                  className="hidden sm:block cursor-pointer dark:text-white text-black"
+                  onClick={() => setOpen(true)}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -107,59 +119,47 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
         )}
       </div>
 
-      {
-        route === "Login" && (
-          <>
-         {
-           open && (
-            <CustomModel 
+      {route === "Login" && (
+        <>
+          {open && (
+            <CustomModel
               open={open}
               setOpen={setOpen}
               setRoute={setRoute}
               activeItem={activeItem}
               component={Login}
-              />
-          )
-         }
-          </>
-        )
-      }
+            />
+          )}
+        </>
+      )}
 
-      {
-        route === "Sign-Up" && (
-          <>
-         {
-           open && (
-            <CustomModel 
+      {route === "Sign-Up" && (
+        <>
+          {open && (
+            <CustomModel
               open={open}
               setOpen={setOpen}
               setRoute={setRoute}
               activeItem={activeItem}
               component={SignUp}
-              />
-          )
-         }
-          </>
-        )
-      }
+            />
+          )}
+        </>
+      )}
 
-       {
-        route === "Verification" && (
-          <>
-         {
-           open && (
-            <CustomModel 
+      {route === "Verification" && (
+        <>
+          {open && (
+            <CustomModel
               open={open}
               setOpen={setOpen}
               setRoute={setRoute}
               activeItem={activeItem}
               component={Verification}
-              />
-          )
-         }
-          </>
-        )
-      }
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };

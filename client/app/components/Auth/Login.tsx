@@ -5,14 +5,16 @@ import * as Yup from "yup";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
-  AiFillGift,
   AiFillGithub,
 } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { styles } from "../../styles/style";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
+import {
+  useLoginMutation,
+  useSocialAuthMutation,
+} from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 type Props = {
   setRoute: (route: string) => void;
@@ -28,28 +30,47 @@ const schema = Yup.object().shape({
 
 const Login: FC<Props> = ({ setRoute, setOpen }) => {
   const [show, setShow] = useState(false);
-  const [login, {error, isSuccess, data}] = useLoginMutation();
+  const { data: session } = useSession();
+  const [login, { error, isSuccess }] = useLoginMutation();
+  const [socialAuth, { isSuccess: socialSuccess, error: socialError }] =
+    useSocialAuthMutation();
+
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ email, password }) => {
-      toast.success("Login Successfully")
-      await login({email, password})
+      toast.success("Login Successfully");
+      await login({ email, password });
     },
   });
 
   useEffect(() => {
-    if(isSuccess){
-      setOpen(false)
+    if (isSuccess || socialSuccess) {
+      setOpen(false);
     }
-    if(error){
-      if("data" in error){
+    if (error) {
+      if ("data" in error) {
         const errorData = error as any;
         toast.error(errorData.data.message);
       }
     }
-  }, [error, isSuccess]);
-  
+    if (socialError) {
+      if ("data" in socialError) {
+        const errorData = socialError as any;
+        toast.error(errorData.data.message);
+      }
+    }
+  }, [error, isSuccess, setOpen, socialError, socialSuccess]);
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      socialAuth({
+        email: session.user.email,
+        name: session.user.name || "",
+        avatar: session.user.image || "",
+      });
+    }
+  }, [session, socialAuth]);
 
   const { errors, touched, values, handleChange, handleSubmit } = formik;
 
@@ -119,11 +140,15 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
           Or join with
         </h5>
         <div className="flex items-center justify-center my-3">
-          <FcGoogle size={30} className="cursor-pointer mr-2" 
-          onClick={() => signIn("google")}
+          <FcGoogle
+            size={30}
+            className="cursor-pointer mr-2"
+            onClick={() => signIn("google")}
           />
-          <AiFillGithub size={30} className="cursor-pointer mr-2" 
-          onClick={() => signIn("github")}
+          <AiFillGithub
+            size={30}
+            className="cursor-pointer mr-2"
+            onClick={() => signIn("github")}
           />
         </div>
 

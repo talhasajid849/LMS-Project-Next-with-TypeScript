@@ -1,9 +1,14 @@
+"use client"
+
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import { Josefin_Sans } from "next/font/google";
 import { ThemeProvider } from "./utils/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { Providers } from "./Provider";
+import React from "react";
+import Loader from "./components/Loader/Loader"
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,11 +38,20 @@ export default function RootLayout({
             defaultTheme="light"
             enableSystem={false}
           >
-            {children}
+           <Custom>{children}</Custom> 
             <Toaster position="top-center" reverseOrder={false} />
           </ThemeProvider>
         </Providers>
       </body>
     </html>
   );
+}
+
+const Custom: React.FC<{children: React.ReactNode}> = ({children}) => {
+  const {isLoading} = useLoadUserQuery({});
+  return (
+    <>
+    {isLoading ? <Loader /> : <>{children}</>}
+    </>
+  )
 }

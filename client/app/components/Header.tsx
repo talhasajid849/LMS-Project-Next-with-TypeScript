@@ -11,7 +11,14 @@ import SignUp from "../components/Auth/SignUp";
 import Verification from "../components/Auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import avatar from "../../public/assests/avatar.png"
+import avatar from "../../public/assests/avatar.png";
+import {
+  useLogOutQuery,
+  useSocialAuthMutation,
+} from "@/redux/features/auth/authApi";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import { getAvatarSrc } from "../utils/getAvatarSrc";
 
 type Props = {
   open: boolean;
@@ -24,7 +31,32 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const [active, setActive] = useState(false);
   const { user } = useSelector((state: any) => state.auth);
+  const { data } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [logout, setLogout] = useState(false);
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
+  useEffect(() => {
+    if (!user) {
+      if (data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data?.user?.image,
+        });
+      }
+    }
+    if (data === null || isSuccess) {
+      toast.success("Login Sucessfully");
+    }
+
+    if (data === null) {
+      setLogout(true);
+    }
+  }, [user, data]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,11 +110,14 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
               </div>
               {user ? (
                 <Link href={"/profile"}>
-                <Image
-                src={user.avatar ? user.avatar : avatar}
-                className="w-[30px] h-[30px] rounded-full cursor-pointer"
-                alt=""
-                />
+                  <Image
+                    src={getAvatarSrc(user?.avatar, avatar)}
+                    className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                    alt=""
+                    width={30}
+                    height={30}
+                    style={{border: activeItem === 5 ? "2px solid #37a39a" : "none"}}
+                  />
                 </Link>
               ) : (
                 <HiOutlineUserCircle

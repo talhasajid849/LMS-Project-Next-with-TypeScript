@@ -39,25 +39,27 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
     skip: !logout ? true : false,
   });
 
-  useEffect(() => {
-    if (!user) {
-      if (data) {
-        socialAuth({
-          email: data?.user?.email,
-          name: data?.user?.name,
-          avatar: data?.user?.image,
-        });
-      }
-    }
-    if (data === null || isSuccess) {
-      toast.success("Login Sucessfully");
-    }
+ useEffect(() => {
+  if (!user && data?.user) {
+    socialAuth({
+      email: data.user.email,
+      name: data.user.name,
+      avatar: data.user.image,
+    });
+  }
+}, [user, data, socialAuth]);
 
-    if (data === null) {
-      setLogout(true);
-    }
-  }, [user, data]);
+useEffect(() => {
+  if (isSuccess) {
+    toast.success("Login Successfully");
+  }
 
+  if (error) {
+    toast.error("Login failed");
+  }
+}, [isSuccess, error]);`
+
+`
   useEffect(() => {
     const handleScroll = () => {
       setActive(window.scrollY > 85);

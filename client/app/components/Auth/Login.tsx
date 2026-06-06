@@ -39,8 +39,8 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
     initialValues: { email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ email, password }) => {
-      toast.success("Login Successfully");
       await login({ email, password });
+      toast.success("Login Successfully");
     },
   });
 
